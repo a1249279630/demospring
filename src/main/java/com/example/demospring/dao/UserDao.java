@@ -36,9 +36,18 @@ public class UserDao {
         return userMapper.selectByPrimaryKey(id);
     }
 
-    public User findUserByUserNameandUserName(@Param("username") String username, String password){
+    public User findUserByUserNameandPassword(@Param("username") String username,@Param("password") String password){
+//        UserExample userExample = new UserExample();
+        return userMapper.loginUser(username,password);
+    }
+    public User findUserByUserNameandPassword111(String username,String password){
+//        UserExample userExample = new UserExample();
+        return userMapper.loginUser(username,password);
+    }
+    public List<User> findUserByUserName(String username){
         UserExample userExample = new UserExample();
-        return userMapper.loginUser(username, password);
+        userExample.createCriteria().andUsernameEqualTo(username);
+        return userMapper.selectByExample(userExample);
     }
 
     public Integer addUser(User user){
@@ -50,5 +59,11 @@ public class UserDao {
     }
     public Integer updateUser(User user){
         return userMapper.updateByPrimaryKey(user);
+    }
+
+    public Integer updateUserbyUsername(User user,String username){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(username);
+        return userMapper.updateByExampleSelective(user,userExample);
     }
 }

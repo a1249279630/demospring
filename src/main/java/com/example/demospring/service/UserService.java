@@ -1,6 +1,9 @@
 package com.example.demospring.service;
 
 import com.example.demospring.pojo.User;
+import com.example.demospring.request.RegistUserRequest;
+import com.example.demospring.request.UpdateUserPasswardRequest;
+import com.example.demospring.request.UpdateUserRequest;
 import com.example.demospring.request.UpdateUserStateRequest;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +11,11 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    Integer addUser(User user);
+    Integer addUser(RegistUserRequest registUserRequest);
 
     Integer deleteUser(Integer id);
 
-    Integer updateUser(User user);
+    Integer updateUser(UpdateUserRequest updateUserRequest, Integer id);
 
     List<User> findAllUser(Integer pageNumber,Integer pageSize);
 
@@ -20,7 +23,9 @@ public interface UserService {
 
     User findUserById(int id);
 
-    User findUserByUserNameandUserName(String userName, String password);
+    User findUserByUserNameandPassword(String userName, String password);
 
     List<User> findUserByActiveCode(String activeCode);
+
+    Integer updateUserPassword(UpdateUserPasswardRequest updateUserPasswardRequest);
 }
