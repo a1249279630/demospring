@@ -1,6 +1,8 @@
 package com.example.demospring.service.impl;
 
+import com.example.demospring.dao.OrderDao;
 import com.example.demospring.dao.UserDao;
+import com.example.demospring.pojo.Orders;
 import com.example.demospring.pojo.User;
 import com.example.demospring.request.RegistUserRequest;
 import com.example.demospring.request.UpdateUserPasswardRequest;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -22,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private OrderDao orderDao;
     @Override
     public Integer addUser(RegistUserRequest registUserRequest) {
         List<User> userByUserName = userDao.findUserByUserName(registUserRequest.getUsername());
@@ -35,6 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setTelephone(registUserRequest.getTelephone());
         user.setUsername(registUserRequest.getUsername());
         user.setActivecode(randomSafetyCode());
+        user.setRegisttime(new Date());
         userDao.addUser(user);
         return 1;
         }else{
@@ -44,7 +50,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer deleteUser(Integer id) {
-        return userDao.deleteUser(id);
+        List<Orders> order = orderDao.findOrdersByUserId(id);
+        if(CollectionUtils.isEmpty(order)){
+            userDao.deleteUser(id);
+            return 1;
+        }else {
+            return -1;
+        }
+
     }
 
     @Override

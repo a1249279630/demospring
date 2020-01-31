@@ -1,6 +1,7 @@
 package com.example.demospring.controller;
 
 import com.example.demospring.pojo.ShoppingCart;
+import com.example.demospring.request.AddShoppingcartRequest;
 import com.example.demospring.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class ShoppingCartController {
      * @return
      */
     @PostMapping(value = "add/shoppingCart/by/json")
-    public Integer addShoppingCartByJson(@RequestBody ShoppingCart shoppingCart){
-        return shoppingCartService.addShoppingCart(shoppingCart);
+    public Integer addShoppingCartByJson(@RequestBody AddShoppingcartRequest addShoppingcartRequest,Integer id){
+        return shoppingCartService.addShoppingCart(addShoppingcartRequest,id);
     }
 
 

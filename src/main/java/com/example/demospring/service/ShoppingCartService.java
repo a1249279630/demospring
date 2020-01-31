@@ -1,12 +1,13 @@
 package com.example.demospring.service;
 
 import com.example.demospring.pojo.ShoppingCart;
+import com.example.demospring.request.AddShoppingcartRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public interface ShoppingCartService {
-    Integer addShoppingCart(ShoppingCart shoppingCart);
+    Integer addShoppingCart(AddShoppingcartRequest addShoppingcartRequest,Integer id);
     Integer deleteShoppingCart(Integer id);
 
     Integer updateShoppingCart(ShoppingCart user);

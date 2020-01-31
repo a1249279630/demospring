@@ -61,7 +61,7 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
 
-        <table tableName="t_orders" domainObjectName="Orders">
+        <table tableName="t_products" domainObjectName="Products">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
         <!-- 有些表的字段需要指定java类型

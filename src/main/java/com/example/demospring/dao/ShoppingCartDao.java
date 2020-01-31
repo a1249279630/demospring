@@ -57,11 +57,15 @@ public class ShoppingCartDao {
         if(shoppingCart.getNum()>num&&shoppingCart.getNum()>0){
 
             shoppingCart.setNum(shoppingCart.getNum()-num);
+
             Products products = productsMapper.selectByPrimaryKey(shoppingCart.getProductsId());
 
             shoppingCart.setMuney(shoppingCart.getMuney()-products.getPrice()*num);
             shoppingCart.setCreattime(new Date());
             products.setPnum(products.getPnum()+num);
+            if(shoppingCart.getNum()==0){
+                return shoppingCartMapper.deleteByPrimaryKey(shoppingCart.getId());
+            }
             productsMapper.updateByPrimaryKey(products);
         }else{
             new Exception("数量不对");

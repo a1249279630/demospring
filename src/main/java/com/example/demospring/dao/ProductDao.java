@@ -3,7 +3,6 @@ package com.example.demospring.dao;
 import com.example.demospring.mapper.ProductsMapper;
 import com.example.demospring.pojo.Products;
 import com.example.demospring.pojo.ProductsExample;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +30,11 @@ public class ProductDao {
     }
 
     public Products findBookById(Integer id)  {
-        return  productsMapper.selectByPrimaryKey(id);
+        Products products = productsMapper.selectByPrimaryKey(id);
+        if(products.toString().isEmpty()){
+            return null;
+        }return products;
+
     }
 
     //category 如果是null，是表的所所有记录数
@@ -49,5 +52,11 @@ public class ProductDao {
             new Exception("数量不够");
         }
         return productsMapper.updateByPrimaryKey(products);
+    }
+
+    public List<Products> findBookByName(String bookname) {
+        ProductsExample productsExample=new ProductsExample();
+        productsExample.createCriteria().andNameLike("%"+bookname+"%");
+        return productsMapper.selectByExample(productsExample);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demospring.controller;
 
 import com.example.demospring.pojo.Address;
+import com.example.demospring.request.AddAddressRequest;
 import com.example.demospring.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ private AddressService addressService;
 
 
     @PostMapping(value = "add/Address/by/json")
-    public Integer addAddressByJson(@RequestBody Address address){
-        return addressService.addAddress(address);
+    public Integer addAddressByJson(@RequestBody AddAddressRequest addAddressRequest,int id){
+        return addressService.addAddress(addAddressRequest,id);
     }
 //
 //
@@ -35,17 +36,17 @@ private AddressService addressService;
     }
 
     @PostMapping(value = "update/address/by/id")
-    public Integer updateAddressByid(Address address) {
-        return addressService.updateAddressByid(address);
+    public Integer updateAddressByid(@RequestBody AddAddressRequest addAddressRequest) {
+        return addressService.updateAddressByid(addAddressRequest);
     }
 
     @DeleteMapping(value = "delete/address/by/userid")
-    public Integer deleteAddressByUserid(Integer userid) {
+    public Integer deleteAddressByUserid(@RequestBody Integer userid) {
         return addressService.deleteAddressByUserid(userid);
     }
 
     @GetMapping(value = "find/address/by/userid")
-    public List<Address> findAddressByUserid(Integer userid) {
+    public List<Address> findAddressByUserid(@RequestBody Integer userid) {
         return addressService.findAddressByUserid(userid);
     }
 }

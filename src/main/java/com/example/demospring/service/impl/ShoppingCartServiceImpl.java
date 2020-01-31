@@ -1,20 +1,33 @@
 package com.example.demospring.service.impl;
 
+import com.example.demospring.dao.ProductDao;
 import com.example.demospring.dao.ShoppingCartDao;
+import com.example.demospring.pojo.Products;
 import com.example.demospring.pojo.ShoppingCart;
+import com.example.demospring.request.AddShoppingcartRequest;
 import com.example.demospring.service.ShoppingCartService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
     private ShoppingCartDao shoppingCartDao;
+    @Autowired
+    private ProductDao productDao;
     @Override
-    public Integer addShoppingCart(ShoppingCart shoppingCart) {
+    public Integer addShoppingCart(AddShoppingcartRequest addShoppingcartRequest,Integer id) {
+        ShoppingCart shoppingCart=new ShoppingCart();
+        shoppingCart.setUserId(id);
+        shoppingCart.setNum(addShoppingcartRequest.getNum());
+        shoppingCart.setProductsId(addShoppingcartRequest.getProductsId());
+        Products productsid = productDao.findBookById(addShoppingcartRequest.getProductsId());
+        shoppingCart.setMuney(productsid.getPrice()*addShoppingcartRequest.getNum());
+        shoppingCart.setCreattime(new Date());
         return shoppingCartDao.addShoppingCart(shoppingCart);
     }
 

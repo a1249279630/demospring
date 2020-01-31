@@ -9,6 +9,7 @@
     <result column="pnum" jdbcType="INTEGER" property="pnum" />
     <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="creattime" jdbcType="TIMESTAMP" property="creattime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, price, category, pnum, imgurl, description
+    id, name, price, category, pnum, imgurl, description, creattime
   </sql>
   <select id="selectByExample" parameterType="com.example.demospring.pojo.ProductsExample" resultMap="BaseResultMap">
     select
@@ -106,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_products (name, price, category, 
-      pnum, imgurl, description
-      )
+      pnum, imgurl, description, 
+      creattime)
     values (#{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{category,jdbcType=VARCHAR}, 
-      #{pnum,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
-      )
+      #{pnum,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{creattime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demospring.pojo.Products">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -136,6 +137,9 @@
       <if test="description != null">
         description,
       </if>
+      <if test="creattime != null">
+        creattime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -155,6 +159,9 @@
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creattime != null">
+        #{creattime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
+      <if test="record.creattime != null">
+        creattime = #{record.creattime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       category = #{record.category,jdbcType=VARCHAR},
       pnum = #{record.pnum,jdbcType=INTEGER},
       imgurl = #{record.imgurl,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR}
+      description = #{record.description,jdbcType=VARCHAR},
+      creattime = #{record.creattime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="creattime != null">
+        creattime = #{creattime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -237,7 +251,8 @@
       category = #{category,jdbcType=VARCHAR},
       pnum = #{pnum,jdbcType=INTEGER},
       imgurl = #{imgurl,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR},
+      creattime = #{creattime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

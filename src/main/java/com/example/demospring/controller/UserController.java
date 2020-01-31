@@ -49,8 +49,13 @@ public class UserController {
 
 
     @DeleteMapping(value = "delete/user/by/id")
-    public Integer deleteUser(@RequestBody Integer id) {
-        return userService.deleteUser(id);
+    public String deleteUser(@RequestBody Integer id) {
+        Integer integer = userService.deleteUser(id);
+        if(integer==1){
+            return "删除成功";
+        }else{
+            return "删除失败，该用户名下有订单";
+        }
     }
 
     @PostMapping(value = "update/user/by/id")

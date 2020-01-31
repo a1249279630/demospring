@@ -1,10 +1,6 @@
-package com.example.demospring.pojo;
+package com.example.demospring.request;
 
-import java.util.Date;
-
-public class Products {
-    private Integer id;
-
+public class AddProductsRequest {
     private String name;
 
     private Double price;
@@ -17,22 +13,12 @@ public class Products {
 
     private String description;
 
-    private Date creattime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public Double getPrice() {
@@ -48,7 +34,7 @@ public class Products {
     }
 
     public void setCategory(String category) {
-        this.category = category == null ? null : category.trim();
+        this.category = category;
     }
 
     public Integer getPnum() {
@@ -64,7 +50,7 @@ public class Products {
     }
 
     public void setImgurl(String imgurl) {
-        this.imgurl = imgurl == null ? null : imgurl.trim();
+        this.imgurl = imgurl;
     }
 
     public String getDescription() {
@@ -72,14 +58,6 @@ public class Products {
     }
 
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public Date getCreattime() {
-        return creattime;
-    }
-
-    public void setCreattime(Date creattime) {
-        this.creattime = creattime;
+        this.description = description;
     }
 }
