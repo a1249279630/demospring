@@ -19,13 +19,15 @@ public interface UserService {
 
     List<User> findAllUser(Integer pageNumber,Integer pageSize);
 
-    Integer updateState(UpdateUserStateRequest updateUserStateRequest, String activeCode);
+    Integer updateState(String activeCode);
 
     User findUserById(int id);
 
-    User findUserByUserNameandPassword(String userName, String password);
+    String findUserByUserNameandPassword(String userName, String password);
 
     List<User> findUserByActiveCode(String activeCode);
 
     Integer updateUserPassword(UpdateUserPasswardRequest updateUserPasswardRequest);
+
+    Integer updateUserRole(String userrole, Integer id);
 }

@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registUserRequest.getUsername());
         user.setActivecode(randomSafetyCode());
         user.setRegisttime(new Date());
+        user.setState(0);
+        user.setRole("普通用户");
         userDao.addUser(user);
         return 1;
         }else{
@@ -77,9 +79,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer updateState(UpdateUserStateRequest updateUserStateRequest, String activeCode) {
+    public Integer updateState(String activeCode) {
          User user=new User();
-         BeanUtils.copyProperties(updateUserStateRequest,user);
+         /*BeanUtils.copyProperties(updateUserStateRequest,user);*/
+         user.setState(1);
          user.setActivecode(activeCode);
          return userDao.updateState(user,activeCode);
     }
@@ -90,8 +93,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByUserNameandPassword(String username, String password) {
-        return userDao.findUserByUserNameandPassword111(username,password);
+    public String findUserByUserNameandPassword(String username, String password) {
+        User user = userDao.findUserByUserNameandPassword111(username, password);
+        if(user.getRole().equals("普通用户")||user.getRole().equals("卖家用户")){
+            String temp = "";
+            if(user.getRole().equals("卖家用户")){
+                temp="可以上传商品";
+            }
+            return user.toString()+"主页"+temp;
+        }else {
+            return user.toString()+"管理员页";
+        }
     }
 
     @Override
@@ -121,6 +133,19 @@ public class UserServiceImpl implements UserService {
             }
         }else return -2;//安全码错误
 
+
+    }
+
+    @Override
+    public Integer updateUserRole(String userrole, Integer id) {
+        try {
+            User user = userDao.findUserById(id);
+            user.setRole(userrole);
+            userDao.updateUser(user);
+            return 1;
+        }catch (Exception e){
+            return -1;
+        }
 
     }
 

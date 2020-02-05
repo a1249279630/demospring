@@ -64,8 +64,23 @@ public class UserController {
     }
 
     @PostMapping(value = "update/userState/by/acticeCode")
-    public Integer updateState(@RequestBody UpdateUserStateRequest updateUserStateRequest, String activeCode){
-        return userService.updateState(updateUserStateRequest,activeCode);
+    public Integer updateState( String activeCode){
+        return userService.updateState(activeCode);
+    }
+
+    @PostMapping(value = "update/userRole/by/id")
+    public String updateUserRole(String userrole,Integer id){
+        if(userrole.equals("普通用户")||userrole.equals("卖家用户")){
+            Integer integer = userService.updateUserRole(userrole, id);
+            if(integer==1){
+                return "跟新成功";
+            }else {
+                return "跟新失败，id不存在";
+            }
+        }else{
+            return "用户角色只能为‘普通用户’或‘卖家用户’";
+        }
+
     }
 
     @GetMapping(value = "find/user/by/id")
@@ -74,7 +89,7 @@ public class UserController {
     }
 
     @GetMapping(value = "fing/user/by/usernameAndpassward")
-    public User findUserByUserNameandPassword(String username, String password){
+    public String findUserByUserNameandPassword(String username, String password){
         return userService.findUserByUserNameandPassword(username,password);
     }
 
